@@ -1,0 +1,20 @@
+{
+  "name": "atwix/rst-table-tool-bundle",
+  "description": "",
+  "type": "library",
+  "require": {
+    "symfony/process": "3.2.*",
+    "symfony/console": "3.2.*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Roman Glushko",
+      "email": "roman.glushko.m@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "RstTableToolBundle\\": "" }
+  },
+  "minimum-stability": "beta"
+}
