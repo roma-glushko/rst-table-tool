@@ -22,9 +22,10 @@ class GenerateRstTableCommand extends Command
     {
         parent::configure();
 
-        $this->setName('table:generate');
+        $this->setName('rst:table:generate');
         $this->setDescription('Generate RST Table of files by path to their root directory');
         $this->addArgument('path', InputArgument::REQUIRED, 'path to root directory');
+        $this->addArgument('output-file', InputArgument::REQUIRED, 'filename to save RST table');
     }
 
     /**
@@ -36,10 +37,9 @@ class GenerateRstTableCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $input->getArgument('path');
+        $outputFile = $input->getArgument('output-file');
 
-        $tableContent = $this->getGenerateRstTablebyPathService()->execute($path);
-
-        $output->writeln($tableContent);
+        $this->getGenerateRstTablebyPathService()->execute($path, $outputFile);
 
         return 0;
     }
