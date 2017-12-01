@@ -26,6 +26,12 @@ class GenerateRstTableCommand extends Command
         $this->setDescription('Generate RST Table of files by path to their root directory');
         $this->addArgument('path', InputArgument::REQUIRED, 'path to root directory');
         $this->addArgument('output-file', InputArgument::REQUIRED, 'filename to save RST table');
+        $this->addArgument(
+            'excluded-path-list',
+            InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
+            'list of path parts to exclude from the table',
+            array()
+        );
     }
 
     /**
@@ -38,8 +44,9 @@ class GenerateRstTableCommand extends Command
     {
         $path = $input->getArgument('path');
         $outputFile = $input->getArgument('output-file');
+        $excludedPathList = $input->getArgument('excluded-path-list');
 
-        $this->getGenerateRstTablebyPathService()->execute($path, $outputFile);
+        $this->getGenerateRstTablebyPathService()->execute($path, $outputFile, $excludedPathList);
 
         return 0;
     }

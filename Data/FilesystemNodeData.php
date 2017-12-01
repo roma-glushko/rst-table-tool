@@ -7,6 +7,9 @@ namespace RstTableToolBundle\Data;
  */
 class FilesystemNodeData
 {
+    /**
+     * @var string
+     */
     protected $nodeName = '';
 
     /**
@@ -57,7 +60,7 @@ class FilesystemNodeData
     }
 
     /**
-     * @param $nodeName
+     * @param string $nodeName
      *
      * @return FilesystemNodeData|null
      */
@@ -75,7 +78,7 @@ class FilesystemNodeData
     }
 
     /**
-     * @param $index
+     * @param int $index
      *
      * @return FilesystemNodeData|null
      */

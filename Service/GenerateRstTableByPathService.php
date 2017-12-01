@@ -3,7 +3,6 @@
 namespace RstTableToolBundle\Service;
 
 use RstTableToolBundle\Data\FilesystemNodeData;
-use RstTableToolBundle\Data\FilesystemTreeData;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -13,15 +12,16 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class GenerateRstTableByPathService
 {
-    protected $excludedPaths = ['vendor'];
-
     /**
+     * Generates RST table by path and save it to the file
+     *
      * @param string $path
-     * @param $outputFile
+     * @param string $outputFile
+     * @param string[] $excludedPathList
      *
      * @return string
      */
-    public function execute($path, $outputFile)
+    public function execute($path, $outputFile, $excludedPathList)
     {
         $filesystemTreeData = new FilesystemNodeData('root');
 
@@ -30,7 +30,7 @@ class GenerateRstTableByPathService
 
             $path = $file->getRelativePathname();
 
-            if ($this->shouldBeExcluded($path)) {
+            if ($this->shouldBeExcluded($path, $excludedPathList)) {
                 continue;
             }
 
@@ -45,7 +45,9 @@ class GenerateRstTableByPathService
     }
 
     /**
-     * @param $path
+     * Retrieves files by path
+     *
+     * @param string $path
      *
      * @return SplFileInfo[]
      */
@@ -62,13 +64,14 @@ class GenerateRstTableByPathService
     }
 
     /**
-     * @param $path
+     * @param string $path
+     * @param string[] $excludedPathList
      *
      * @return bool
      */
-    protected function shouldBeExcluded($path)
+    protected function shouldBeExcluded($path, $excludedPathList)
     {
-        foreach ($this->excludedPaths as $excludedPath) {
+        foreach ($excludedPathList as $excludedPath) {
             if (strstr($path, $excludedPath)) {
                 return true;
             }
@@ -107,8 +110,8 @@ class GenerateRstTableByPathService
 
     /**
      * @param FilesystemNodeData $filesystemTreeData
-     * @param $columnWidthList
-     * @param $depth
+     * @param int[] $columnWidthList
+     * @param int $depth
      *
      * @return string
      */
@@ -127,7 +130,8 @@ class GenerateRstTableByPathService
 
     /**
      * @param FilesystemNodeData $filesystemTreeData
-     * @param $depth
+     * @param int[] $columnWidthList
+     * @param int $depth
      *
      * @return string
      */
@@ -167,6 +171,11 @@ class GenerateRstTableByPathService
         return $rowContent;
     }
 
+    /**
+     * @param int[] $columnWidthList
+     *
+     * @return string
+     */
     protected function renderRstTableHeader($columnWidthList)
     {
         $rowContent = '';
