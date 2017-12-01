@@ -2,7 +2,7 @@
  
 ## Purpose
 
-The sctipt creates RST tables by path and saves the table to some file.
+The script creates RST tables by path and saves the table to some file.
 
 ## Features
 
